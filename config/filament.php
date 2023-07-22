@@ -188,7 +188,7 @@ return [
 
     'database_notifications' => [
         'enabled'          => FALSE,
-        'polling_interval' => '30s',
+        'polling_interval' => '5s',
     ],
 
     /*

@@ -10,14 +10,22 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class UserResource extends Resource{
 
     protected static ?string $model = User::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
+
+    protected static ?string $navigationLabel = 'Người dùng';
+
+    protected static ?string $navigationGroup = 'Quản lý';
+
+
+    protected static function getNavigationBadge()
+    : ?string{
+        return static::getModel()::count();
+    }
 
     public static function form(Form $form)
     : Form{

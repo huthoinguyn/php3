@@ -19,6 +19,16 @@ class BrandResource extends Resource{
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
+    protected static ?string $navigationLabel = 'Thương hiệu';
+
+    protected static ?string $navigationGroup = 'Quản lý';
+
+
+    protected static function getNavigationBadge()
+    : ?string{
+        return static::getModel()::count();
+    }
+
     public static function form(Form $form)
     : Form{
         return $form

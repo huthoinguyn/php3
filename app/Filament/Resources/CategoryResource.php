@@ -11,18 +11,26 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 
-class CategoryResource extends Resource
-{
+class CategoryResource extends Resource{
+
     protected static ?string $model = Category::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-tag';
 
-    public static function form(Form $form): Form
-    {
+    protected static ?string $navigationLabel = 'Danh mục';
+
+    protected static ?string $navigationGroup = 'Quản lý';
+
+
+    protected static function getNavigationBadge()
+    : ?string{
+        return static::getModel()::count();
+    }
+
+    public static function form(Form $form)
+    : Form{
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
@@ -33,19 +41,19 @@ class CategoryResource extends Resource
                                           ->required()
                                           ->maxLength(2048),
                 Forms\Components\TextInput::make('slug')
-                    ->required()
-                    ->maxLength(2048),
+                                          ->required()
+                                          ->maxLength(2048),
                 Forms\Components\Textarea::make('description'),
                 Forms\Components\TextInput::make('type')
-                    ->required()
-                    ->maxLength(255),
+                                          ->required()
+                                          ->maxLength(255),
                 Forms\Components\Toggle::make('status')
-                    ->required(),
+                                       ->required(),
             ]);
     }
 
-    public static function table(Table $table): Table
-    {
+    public static function table(Table $table)
+    : Table{
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
@@ -53,11 +61,11 @@ class CategoryResource extends Resource
                 Tables\Columns\TextColumn::make('description'),
                 Tables\Columns\TextColumn::make('type'),
                 Tables\Columns\IconColumn::make('status')
-                    ->boolean(),
+                                         ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
+                                         ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime(),
+                                         ->dateTime(),
             ])
             ->filters([
                 //
@@ -71,8 +79,8 @@ class CategoryResource extends Resource
             ]);
     }
 
-    public static function getPages(): array
-    {
+    public static function getPages()
+    : array{
         return [
             'index' => Pages\ManageCategories::route('/'),
         ];

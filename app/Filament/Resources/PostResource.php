@@ -20,6 +20,16 @@ class PostResource extends Resource{
 
     protected static ?string $navigationIcon = 'heroicon-o-link';
 
+    protected static ?string $navigationLabel = 'Bài viết';
+
+    protected static ?string $navigationGroup = 'Quản lý';
+
+
+    protected static function getNavigationBadge()
+    : ?string{
+        return static::getModel()::count();
+    }
+
     public static function form(Form $form)
     : Form{
         return $form
@@ -60,7 +70,7 @@ class PostResource extends Resource{
                 Tables\Columns\TextColumn::make('title'),
                 //                Tables\Columns\TextColumn::make('slug'),
                 Tables\Columns\ImageColumn::make('thumbnail'),
-                Tables\Columns\TextColumn::make('body'),
+                Tables\Columns\TextColumn::make('body')->html(),
                 Tables\Columns\TextColumn::make('published_at')
                                          ->dateTime(),
                 Tables\Columns\TextColumn::make('user.name'),

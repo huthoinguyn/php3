@@ -18,7 +18,16 @@ class ProductResource extends Resource{
 
     protected static ?string $model = Product::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
+
+    protected static ?string $navigationLabel = 'Sản phẩm';
+
+    protected static ?string $navigationGroup = 'Quản lý';
+
+    protected static function getNavigationBadge()
+    : ?string{
+        return static::getModel()::count();
+    }
 
     public static function form(Form $form)
     : Form{
@@ -68,7 +77,8 @@ class ProductResource extends Resource{
                 Tables\Columns\TextColumn::make('brand.name'),
                 Tables\Columns\TextColumn::make('name'),
                 //                Tables\Columns\TextColumn::make('slug'),
-                Tables\Columns\TextColumn::make('price'),
+                Tables\Columns\TextColumn::make('price')
+                                         ->money('vnd'),
                 Tables\Columns\ImageColumn::make('image'),
                 //                Tables\Columns\TextColumn::make('description'),
                 Tables\Columns\TextColumn::make('summary'),
