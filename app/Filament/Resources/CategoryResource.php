@@ -34,6 +34,7 @@ class CategoryResource extends Resource{
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                                          ->label('Tên danh mục')
                                           ->reactive()
                                           ->afterStateUpdated(function (Closure $set, $state){
                                               $set('slug', Str::slug($state));
@@ -43,11 +44,14 @@ class CategoryResource extends Resource{
                 Forms\Components\TextInput::make('slug')
                                           ->required()
                                           ->maxLength(2048),
-                Forms\Components\Textarea::make('description'),
+                Forms\Components\Textarea::make('description')
+                                         ->label('Mô tả'),
                 Forms\Components\TextInput::make('type')
+                                          ->label('Loại danh mục')
                                           ->required()
                                           ->maxLength(255),
                 Forms\Components\Toggle::make('status')
+                                       ->label('Trạng thái')
                                        ->required(),
             ]);
     }
@@ -56,15 +60,20 @@ class CategoryResource extends Resource{
     : Table{
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('name')
+                                         ->label('Tên danh mục'),
                 Tables\Columns\TextColumn::make('slug'),
-                Tables\Columns\TextColumn::make('description'),
-                Tables\Columns\TextColumn::make('type'),
+                Tables\Columns\TextColumn::make('description')
+                                         ->label('Mô tả'),
+                Tables\Columns\TextColumn::make('type')
+                                         ->label('Loại danh mục'),
                 Tables\Columns\IconColumn::make('status')
+                                         ->label('Trạng thái')
                                          ->boolean(),
-                Tables\Columns\TextColumn::make('created_at')
-                                         ->dateTime(),
+                //                Tables\Columns\TextColumn::make('created_at')
+                //                                         ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')
+                                         ->label('Cập nhật lần cuối')
                                          ->dateTime(),
             ])
             ->filters([

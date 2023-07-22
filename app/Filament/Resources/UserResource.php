@@ -32,14 +32,17 @@ class UserResource extends Resource{
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                                          ->label('Tên')
                                           ->required()
                                           ->maxLength(255),
                 Forms\Components\TextInput::make('email')
                                           ->email()
                                           ->required()
                                           ->maxLength(255),
-                Forms\Components\DateTimePicker::make('email_verified_at'),
+                Forms\Components\DateTimePicker::make('email_verified_at')
+                                               ->label('Xác thực Email'),
                 Forms\Components\TextInput::make('password')
+                                          ->label('Mật khẩu')
                                           ->password()
                                           ->required()
                                           ->maxLength(255),
@@ -50,13 +53,17 @@ class UserResource extends Resource{
     : Table{
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('name')
+                                         ->label('Tên')
+                ,
                 Tables\Columns\TextColumn::make('email'),
                 Tables\Columns\TextColumn::make('email_verified_at')
+                                         ->label('Xác thực Email')
                                          ->dateTime(),
-                Tables\Columns\TextColumn::make('created_at')
-                                         ->dateTime(),
+                //                Tables\Columns\TextColumn::make('created_at')
+                //                                         ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')
+                                         ->label('Cập nhật lần cuối')
                                          ->dateTime(),
             ])
             ->filters([

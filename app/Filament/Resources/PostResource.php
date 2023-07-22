@@ -35,12 +35,14 @@ class PostResource extends Resource{
         return $form
             ->schema([
                 Forms\Components\Select::make('category_id')
+                                       ->label('Danh mục')
                                        ->relationship('category', 'name',
                                            fn(Builder $query) => $query->where('status', '=', 1)
                                                                        ->where('type', '=',
                                                                            'baiviet'))
                                        ->required(),
                 Forms\Components\TextInput::make('title')
+                                          ->label('Tiêu đề')
                                           ->reactive()
                                           ->afterStateUpdated(function (Closure $set, $state){
                                               $set('slug', Str::slug($state));
@@ -50,14 +52,19 @@ class PostResource extends Resource{
                 Forms\Components\TextInput::make('slug')
                                           ->required()
                                           ->maxLength(2048),
-                Forms\Components\FileUpload::make('thumbnail'),
+                Forms\Components\FileUpload::make('thumbnail')
+                                           ->label('Hình ảnh'),
                 Forms\Components\RichEditor::make('body')
+                                           ->label('Nội dung')
                                            ->required(),
-                Forms\Components\DateTimePicker::make('published_at'),
+                Forms\Components\DateTimePicker::make('published_at')
+                                               ->label('Ngày đăng tải'),
                 Forms\Components\Select::make('user_id')
+                                       ->label('Người đăng')
                                        ->relationship('user', 'name')
                                        ->required(),
                 Forms\Components\Toggle::make('active')
+                                       ->label('Kích hoạt')
                                        ->required(),
             ]);
     }
@@ -66,19 +73,27 @@ class PostResource extends Resource{
     : Table{
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('category.name'),
-                Tables\Columns\TextColumn::make('title'),
+                Tables\Columns\TextColumn::make('category.name')
+                                         ->label('Danh mục'),
+                Tables\Columns\TextColumn::make('title')
+                                         ->label('Tiêu đề'),
                 //                Tables\Columns\TextColumn::make('slug'),
-                Tables\Columns\ImageColumn::make('thumbnail'),
-                Tables\Columns\TextColumn::make('body')->html(),
+                Tables\Columns\ImageColumn::make('thumbnail')
+                                          ->label('Hình ảnh'),
+                Tables\Columns\TextColumn::make('body')->html()
+                                         ->label('Nội dung'),
                 Tables\Columns\TextColumn::make('published_at')
+                                         ->label('Ngày đăng tải')
                                          ->dateTime(),
-                Tables\Columns\TextColumn::make('user.name'),
+                Tables\Columns\TextColumn::make('user.name')
+                                         ->label('Tác giả'),
                 Tables\Columns\IconColumn::make('active')
+                                         ->label('Trạng thái')
                                          ->boolean(),
                 //                Tables\Columns\TextColumn::make('created_at')
                 //                                         ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')
+                                         ->label('Cập nhật lần cuối')
                                          ->dateTime(),
             ])
             ->filters([

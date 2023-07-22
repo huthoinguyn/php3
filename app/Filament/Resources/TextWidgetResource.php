@@ -25,12 +25,16 @@ class TextWidgetResource extends Resource{
                                           ->required()
                                           ->maxLength(255),
                 Forms\Components\TextInput::make('title')
+                                          ->label('Tiêu đề')
                                           ->required()
                                           ->maxLength(2048),
-                Forms\Components\FileUpload::make('image'),
+                Forms\Components\FileUpload::make('image')
+                                           ->label('Hình ảnh'),
                 Forms\Components\RichEditor::make('description')
+                                           ->label('Mô tả')
                                            ->maxLength(65535),
                 Forms\Components\Toggle::make('active')
+                                       ->label('Kích hoạt')
                                        ->required(),
             ]);
     }
@@ -40,14 +44,18 @@ class TextWidgetResource extends Resource{
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('key'),
-                Tables\Columns\TextColumn::make('title'),
-                Tables\Columns\ImageColumn::make('image'),
+                Tables\Columns\TextColumn::make('title')
+                                         ->label('Tiêu đề'),
+                Tables\Columns\ImageColumn::make('image')
+                                          ->label('Hình ảnh'),
                 //                Tables\Columns\TextColumn::make('description'),
                 Tables\Columns\IconColumn::make('active')
+                                         ->label('Kích hoạt')
                                          ->boolean(),
                 //                Tables\Columns\TextColumn::make('created_at')
                 //                    ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')
+                                         ->label('Cập nhật lần cuối')
                                          ->dateTime(),
             ])
             ->filters([

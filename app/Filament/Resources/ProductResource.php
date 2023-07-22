@@ -34,16 +34,19 @@ class ProductResource extends Resource{
         return $form
             ->schema([
                 Forms\Components\Select::make('category_id')
+                                       ->label('Danh mục')
                                        ->relationship('category', 'name',
                                            fn(Builder $query) => $query
                                                ->where('status', '=', 1)
                                                ->where('type', '=', 'sanpham'))
                                        ->required(),
                 Forms\Components\Select::make('brand_id')
+                                       ->label('Thương hiệu')
                                        ->relationship('brand', 'name',
                                            fn(Builder $query) => $query->where('status', '=', 1))
                                        ->required(),
                 Forms\Components\TextInput::make('name')
+                                          ->label('Tên sản phẩm')
                                           ->reactive()
                                           ->afterStateUpdated(function (Closure $set, $state){
                                               $set('slug', Str::slug($state));
@@ -54,17 +57,23 @@ class ProductResource extends Resource{
                                           ->required()
                                           ->maxLength(2048),
                 Forms\Components\TextInput::make('price')
+                                          ->label('Giá')
                                           ->required(),
                 Forms\Components\FileUpload::make('image')
+                                           ->label('Hình ảnh')
                                            ->required(),
                 Forms\Components\RichEditor::make('description')
+                                           ->label('Mô tả')
                                            ->required(),
                 Forms\Components\Textarea::make('summary')
+                                         ->label('Nội dung tóm tắt')
                                          ->required()
                                          ->maxLength(65535),
                 Forms\Components\Toggle::make('featured')
+                                       ->label('Nổi bật')
                                        ->required(),
                 Forms\Components\Toggle::make('status')
+                                       ->label('Trạng thái')
                                        ->required(),
             ]);
     }
@@ -73,22 +82,31 @@ class ProductResource extends Resource{
     : Table{
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('category.name'),
-                Tables\Columns\TextColumn::make('brand.name'),
-                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('category.name')
+                                         ->label('Danh mục'),
+                Tables\Columns\TextColumn::make('brand.name')
+                                         ->label('Thương hiệu'),
+                Tables\Columns\TextColumn::make('name')
+                                         ->label('Tên sản phẩm'),
                 //                Tables\Columns\TextColumn::make('slug'),
                 Tables\Columns\TextColumn::make('price')
+                                         ->label('Giá')
                                          ->money('vnd'),
-                Tables\Columns\ImageColumn::make('image'),
+                Tables\Columns\ImageColumn::make('image')
+                                          ->label('Hình ảnh'),
                 //                Tables\Columns\TextColumn::make('description'),
-                Tables\Columns\TextColumn::make('summary'),
+                Tables\Columns\TextColumn::make('summary')
+                                         ->label('Tóm tắt nội dung'),
                 Tables\Columns\IconColumn::make('featured')
+                                         ->label('Nổi bật')
                                          ->boolean(),
                 Tables\Columns\IconColumn::make('status')
+                                         ->label('Trạng thái')
                                          ->boolean(),
                 //                Tables\Columns\TextColumn::make('created_at')
                 //                                         ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')
+                                         ->label('Cập nhật lần cuối')
                                          ->dateTime(),
             ])
             ->filters([
